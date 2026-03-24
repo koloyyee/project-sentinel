@@ -2,12 +2,19 @@
   "name": "project-sentiel",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/main.js",
   "type": "module",
+  "bin": {
+    "sentinel": "./dist/main.js"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "start": "tsx src/main.ts",
     "build": "tsc",
+    "postbuild": "chmod +x dist/main.js",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist"
   },
