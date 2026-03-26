@@ -1,0 +1,34 @@
+{
+  "name": "project-sentiel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/main.js",
+  "type": "module",
+  "bin": {
+    "sentinel": "./dist/main.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "tsx src/main.ts",
+    "build": "tsc",
+    "postbuild": "chmod +x dist/main.js",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.32.1",
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "commander": "^14.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
