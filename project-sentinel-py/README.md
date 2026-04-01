@@ -25,11 +25,11 @@
 - **Execution:** Use Python's `subprocess` module to trigger high-speed shell commands for heavy lifting.
 - **The Janitor Command:** ```bash
 
+``` sh
   # Finds and removes logs over 10MB in the target path immediately
 
   find [TARGET_PATH] -name "\*.log" -type f -size +10M -delete
 
-  ```
 
   ```
 
