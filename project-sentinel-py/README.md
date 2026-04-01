@@ -1,35 +1,42 @@
-# The "Project Sentinel" CLI
+## **The "Project Sentinel" Python CLI (Updated for 2026)**
 
-Objective: Build a command-line tool that "audits" a local development project, identifies "technical debt" (large files, missing dependencies, old logs), and offers a one-click Bash-powered cleanup.
+**Objective:** Build a high-performance Python CLI that audits local projects, identifies technical debt (large logs, inactive environments, missing locks), and triggers optimized Bash cleanups.
 
-## Setup & Discovery (30 mins)
+---
 
-Initialize a new directory: npm init -y && tsc --init.
-Install only one dependency: npm install chalk (for professional-looking terminal output).
-Task: Create a script that takes a directory path as an argument.
-Requirement: Use the fs module to check if the path exists.
-Requirement: If no path is provided, default to the current directory (process.cwd()).
+### **Part 1: Setup & Discovery (15 mins)**
 
-## The "Audit" Engine (45 mins)
+- **Initialization:** Use `uv init sentinel` to create a modern Python project structure.
+- **Dependency:** Add `rich` (the 2026 industry standard for beautiful terminal UI, tables, and colors).
+- **Task:** Create a script that accepts a directory path as a command-line argument.
+- **Requirement:** Use `pathlib` (Python's object-oriented filesystem library) to verify the path exists.
+- **Requirement:** Default to the current working directory if no path is provided.
 
-Write a TypeScript function that scans the target directory for three specific "waste" items:
-Massive Folders: Find node_modules folders that haven't been touched in over 30 days.
-Ghost Logs: Locate any .log files larger than 10MB.
-Dependency Drifts: Check if a package.json exists but is missing a lock file (which signals an unstable environment).
-Logic Tip: Use fs.statSync() to get the mtime (modified time) and size of files.
+### **Part 2: The "Audit" Engine (45 mins)**
 
-## The "Bash Muscle" (30 mins)
-This is where you show off your Bash mastery. Instead of using slow Node.js loops to delete files, you will trigger optimized shell commands.
-Use child_process.execSync to run a "Janitor Command."
-The Command: 
-```bash
-# This finds and removes all .log files in the path immediately
-find [TARGET_PATH] -name "*.log" -type f -delete
-```
+- **Scanning:** Write a function to scan the target directory for three specific "waste" items:
+  - **Inactive Environments:** Find `.venv` or `node_modules` folders that haven't been modified in over 30 days.
+  - **Ghost Logs:** Locate any `.log` files larger than 10MB.
+  - **Dependency Drifts:** Detect if a `pyproject.toml` (or `package.json`) exists without a corresponding lock file (`uv.lock` or `package-lock.json`).
+- **Logic Tip:** Use `path.stat().st_mtime` for age and `path.stat().st_size` for file size.
 
-Challenge: Write a Bash string that lists the top 5 largest directories in the project so the user knows what is eating their space.
+### **Part 3: The "Bash Muscle" (30 mins)**
 
-## Part 4: The Professional Finish (15 mins)
-Output: Use console.table() to display the findings of your audit (File Type, Size, Status).
-The "Safety" Feature: Implement a --dry-run flag. If this flag is present, the tool lists what it would do but does not execute the Bash cleanup.
+- **Execution:** Use Python's `subprocess` module to trigger high-speed shell commands for heavy lifting.
+- **The Janitor Command:** ```bash
 
+  # Finds and removes logs over 10MB in the target path immediately
+
+  find [TARGET_PATH] -name "\*.log" -type f -size +10M -delete
+
+  ```
+
+  ```
+
+- **Challenge:** Write a Bash string that executes `du -sh * | sort -h | tail -n 5` to identify the top 5 largest directories in the project.
+
+### **Part 4: The Professional Finish (15 mins)**
+
+- **Output:** Use `rich.table` to display audit findings (Path, Type, Size, and Status) in a color-coded terminal grid.
+- **The "Safety" Feature:** Implement a `--dry-run` flag using `argparse`.
+- **Behavior:** If the flag is present, the tool prints the Bash commands it _would_ have run but skips actual execution.
