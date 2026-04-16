@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { Command, type OptionValues } from "commander";
 import chalk from "chalk";
+import { Command, type OptionValues } from "commander";
 import fs, { stat } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -12,6 +12,7 @@ function isNodeError(err: unknown): err is NodeJS.ErrnoException {
 function resolvePath(input: string) {
   const value = input.trim();
   if (!value || value === "~") {
+    // MARK: os.homedir() is os agnostic
     return os.homedir();
   }
   if (value.startsWith("~/")) {
